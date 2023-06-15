@@ -18,7 +18,12 @@
     -fx-scale-x:1.1;
     -fx-scale-y:1.1;
 }
-
+.text-field {
+    -fx-font-family:'x12y16pxMaruMonica';
+}
+.combo-box {
+    -fx-font-family:'x12y16pxMaruMonica';
+}
 #optionBack {
     -fx-font-family:'x12y16pxMaruMonica',"Lao MN";;
     -fx-background-color:transparent;

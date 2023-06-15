@@ -259,6 +259,106 @@ public class App extends Application {
 
         defenseSelectHBox.getChildren().addAll(increaseDefense,decreaseDefense);
 
+        //MANA
+
+        HBox manaSelectHBox = new HBox();
+        grid.add(manaSelectHBox,0,9);
+        manaSelectHBox.setId("manaHBox");
+        Label ccManaLabel = new Label("Mana: " + Integer.toString( (int)player.getMana()));
+        ccManaLabel.setId("ccLabel");
+        manaSelectHBox.setMargin(ccManaLabel,new Insets(0, 15, 0, 10));
+        manaSelectHBox.getChildren().add(ccManaLabel);
+
+        Button increaseMana = new Button("+");
+        increaseMana.setId("increaseButton");
+        increaseMana.setPrefWidth(50);
+        increaseMana.setOnAction(e -> {
+            if(player.getAttributePoints() > 0) {
+                player.setAttributePoints(player.getAttributePoints() - 1);
+                player.setMana(player.getMana() + 1);
+            }
+        });
+        Button decreaseMana = new Button("-");
+        decreaseMana.setOnAction(e -> {
+            if(player.getMana() > 1) {
+                player.setAttributePoints(player.getAttributePoints() + 1);
+                player.setMana(player.getMana() - 1);
+            }
+        });
+        decreaseMana.setPrefWidth(50);
+        decreaseMana.setId("decreaseButton");
+
+
+        manaSelectHBox.getChildren().addAll(increaseMana,decreaseMana);
+
+        //STAMINA
+        HBox staminaSelectHBox = new HBox();
+        grid.add(staminaSelectHBox,0,10);
+        staminaSelectHBox.setId("staminaHBox");
+        Label ccStaminaLabel = new Label("Stamina: " + Integer.toString( (int)player.getStamina()));
+        ccStaminaLabel.setId("ccLabel");
+        staminaSelectHBox.setMargin(ccStaminaLabel,new Insets(0, 15, 0, 10));
+        staminaSelectHBox.getChildren().add(ccStaminaLabel);
+
+        Button increaseStamina = new Button("+");
+        increaseStamina.setId("increaseButton");
+        increaseStamina.setPrefWidth(50);
+        increaseStamina.setOnAction(e -> {
+            if(player.getAttributePoints() > 0) {
+                player.setAttributePoints(player.getAttributePoints() - 1);
+                player.setStamina(player.getStamina() + 1);
+            }
+        });
+        Button decreaseStamina = new Button("-");
+        decreaseStamina.setOnAction(e -> {
+            if(player.getStamina() > 1) {
+                player.setAttributePoints(player.getAttributePoints() + 1);
+                player.setStamina(player.getStamina() - 1);
+            }
+        });
+        decreaseStamina.setPrefWidth(50);
+        decreaseStamina.setId("decreaseButton");
+
+
+        staminaSelectHBox.getChildren().addAll(increaseStamina,decreaseStamina);
+
+        //DEXERITY
+        HBox dexSelectHBox = new HBox();
+        grid.add(dexSelectHBox,0,11);
+        dexSelectHBox.setId("dexHBox");
+        Label ccDexLabel = new Label("Dex: " + Integer.toString( (int)player.getDex()));
+        ccDexLabel.setId("ccLabel");
+        dexSelectHBox.setMargin(ccDexLabel,new Insets(0, 15, 0, 10));
+        dexSelectHBox.getChildren().add(ccDexLabel);
+
+        Button increaseDex = new Button("+");
+        increaseDex.setId("increaseButton");
+        increaseDex.setPrefWidth(50);
+        increaseDex.setOnAction(e -> {
+            if(player.getAttributePoints() > 0) {
+                player.setAttributePoints(player.getAttributePoints() - 1);
+                player.setDex(player.getDex() + 1);
+            }
+        });
+        Button decreaseDex = new Button("-");
+        decreaseDex.setOnAction(e -> {
+            if(player.getDex() > 1) {
+                player.setAttributePoints(player.getAttributePoints() + 1);
+                player.setDex(player.getDex() - 1);
+            }
+        });
+        decreaseDex.setPrefWidth(50);
+        decreaseDex.setId("decreaseButton");
+        dexSelectHBox.getChildren().addAll(increaseDex,decreaseDex);
+
+        //submit button
+        Button submitAttributes = new Button();
+        submitAttributes.setOnAction(e -> {
+            submitAffirm(player);
+        });
+        submitAttributes.setPrefWidth(50);
+        grid.add(submitAttributes,0,12);
+
         //ATTRIBUTE TIME CLOCK
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(0);
         //corePoolSize was at 1, but it would keep a live thread even when they are idle, setting to 0 should terminate any idle threads
@@ -268,6 +368,9 @@ public class App extends Application {
             javafx.application.Platform.runLater(() -> ccHealthLabel.setText("Health: " + Integer.toString( (int)(player.getHealth() * 10))));
             javafx.application.Platform.runLater(() -> ccAttackLabel.setText("Attack: " + Integer.toString( (int)player.getAttack())));
             javafx.application.Platform.runLater(() -> ccDefenseLabel.setText("Defense: " + Integer.toString( (int)player.getDefense())));
+            javafx.application.Platform.runLater(() -> ccManaLabel.setText("Mana: " + Integer.toString( (int)player.getMana())));
+            javafx.application.Platform.runLater(() -> ccStaminaLabel.setText("Stamina: " + Integer.toString( (int)player.getStamina())));
+            javafx.application.Platform.runLater(() -> ccDexLabel.setText("Dex: " + Integer.toString( (int)player.getDex())));
         }, 0, 100, TimeUnit.MILLISECONDS);
 
         scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
@@ -284,6 +387,29 @@ public class App extends Application {
         });
 
         return scene;
+    }
+    public void submitAffirm(Entity player) {
+        GridPane grid = new GridPane();
+        Stage stage = new Stage();
+        stage.setTitle("Confirm");
+        stage.setScene(new Scene(grid,300, 200));
+        grid.setPadding(new Insets(0,0,0,10));
+
+        Text name = new Text("Name: " + player.getName());
+        grid.add(name,0,1);
+        Text health = new Text("Health: " + player.getHealth());
+        grid.add(health,0,2);
+        Text def = new Text("Name: " + player.getDefense());
+        grid.add(def,0,3);
+        Text attack = new Text("Attack: " + player.getAttack());
+        grid.add(attack,0,4);
+        Text mana = new Text("Mana: " + player.getMana());
+        grid.add(mana,0,5);
+        Text stamina = new Text("Stamina: " + player.getStamina());
+        grid.add(stamina,0,6);
+        Text dex = new Text("Dex: " + player.getDex());
+        grid.add(dex,0,7);
+        stage.show();
     }
     public Scene testWindow() {
         //BASIC DESIGN----

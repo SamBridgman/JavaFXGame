@@ -29,7 +29,7 @@ public class Entity {
         this.level = 1;
         this.xp = 0;
         this.money = 0;
-        this.attributePoints = 25;
+        this.attributePoints = 20;
     }
     //setters -- Sam
     public void setName(String name) {
