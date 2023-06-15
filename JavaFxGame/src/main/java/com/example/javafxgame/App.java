@@ -41,7 +41,7 @@ public class App extends Application {
         Label textTitle = new Label("Temp Name");
         textTitle.setId("textTitle");
         //textTitle.setFont(new Font("Lao MN",40));
-
+        //test
         stackP.getChildren().add(textTitle);
         //stackP.setStyle("-fx-background-color:#F4EBD0;"); //color styling
         //start btn
