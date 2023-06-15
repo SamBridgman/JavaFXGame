@@ -1,0 +1,69 @@
+/*-----Sam------*/
+@font-face {
+    font-family:"x12y16pxMaruMonica" ;
+    src: url("x12y16pxMaruMonica.ttf");
+}
+
+#homeButton {
+    -fx-font-family:'x12y16pxMaruMonica';
+    -fx-background-color:transparent;
+    -fx-text-fill:black;
+    -fx-pref-width: 300px;
+    -fx-font-size:40px;
+}
+#homeButton:hover {  /* when hovered */
+    -fx-text-fill:#B68D40;
+}
+#homeButton:pressed { /* when the button is pressed, it increases the size*/
+    -fx-scale-x:1.1;
+    -fx-scale-y:1.1;
+}
+
+#optionBack {
+    -fx-font-family:'x12y16pxMaruMonica',"Lao MN";;
+    -fx-background-color:transparent;
+    -fx-text-fill:white;
+    -fx-pref-width: 300px;
+    -fx-font-size:40px;
+}
+#optionBack:hover {  /* when hovered */
+    -fx-text-fill:#B68D40;
+}
+#optionBack:pressed { /* when the button is pressed, it increases the size*/
+    -fx-scale-x:1.1;
+    -fx-scale-y:1.1;
+}
+
+#textTitle {
+    -fx-font-family:'x12y16pxMaruMonica',"Lao MN";
+    -fx-font-size:60;
+    -fx-text-fill:Black;
+    -fx-translate-y:-100px;
+
+}
+#stackPane {
+    -fx-background-image:url('pixelImage.png');
+    -fx-background-repeat:no-repeat;
+    -fx-background-size: cover;
+}
+
+/*-----Sam------*/
+/*CHARACTER CREATION*/
+#ccTitleHBox {
+    -fx-background-color:black;
+}
+#ccTitle{
+    -fx-fill:white;
+    -fx-font-family:'x12y16pxMaruMonica',"Lao MN";
+    -fx-font-size:40;
+}
+#ccLabel {
+    -fx-text-fill:black;
+    -fx-font-family:'x12y16pxMaruMonica',"Lao MN";
+    -fx-font-size:25;
+}
+#apLabel {
+    -fx-text-fill:black;
+    -fx-font-family:'x12y16pxMaruMonica',"Lao MN";
+    -fx-font-size:30;
+}

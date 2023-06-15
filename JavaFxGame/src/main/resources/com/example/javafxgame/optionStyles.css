@@ -1,0 +1,50 @@
+/*-----OPTIONS------*/
+@font-face {
+    font-family:"x12y16pxMaruMonica" ;
+    src: url("x12y16pxMaruMonica.ttf");
+}
+#optionsTitle {
+    -fx-text-fill:white;
+    -fx-font-family:'x12y16pxMaruMonica',"Lao MN";
+    -fx-font-size:40;
+}
+#optionBack {
+    -fx-font-family:'x12y16pxMaruMonica',"Lao MN";;
+    -fx-background-color:transparent;
+    -fx-text-fill:white;
+    -fx-pref-width: 300px;
+    -fx-font-size:40px;
+}
+#optionBack:hover {  /* when hovered */
+    -fx-text-fill:#B68D40;
+}
+#optionBack:pressed { /* when the button is pressed, it increases the size*/
+    -fx-scale-x:1.1;
+    -fx-scale-y:1.1;
+}
+#optionDifficulty {
+    -fx-font-family:'x12y16pxMaruMonica',"Lao MN";;
+    -fx-background-color:transparent;
+    -fx-text-fill:black;
+    -fx-pref-width: 300px;
+    -fx-font-size:40px;
+}
+#optionDifficulty:hover {  /* when hovered */
+    -fx-text-fill:#B68D40;
+}
+#optionDifficulty:pressed { /* when the button is pressed, it increases the size*/
+    -fx-scale-x:1.1;
+    -fx-scale-y:1.1;
+}
+#testButton {
+    -fx-background-image:url("button.png");
+    -fx-background-size: cover;
+    -fx-height:auto;
+
+}
+#testButton:hover {
+    -fx-background-image:url("button2.png");
+    -fx-scale-x:1.1;
+    -fx-scale-y:1.1;
+}
+
