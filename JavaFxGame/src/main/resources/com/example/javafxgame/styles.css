@@ -3,13 +3,21 @@
     font-family:"x12y16pxMaruMonica" ;
     src: url("x12y16pxMaruMonica.ttf");
 }
-
+.text {
+    -fx-font-family:'x12y16pxMaruMonica';
+}
 #homeButton {
     -fx-font-family:'x12y16pxMaruMonica';
     -fx-background-color:transparent;
     -fx-text-fill:black;
     -fx-pref-width: 300px;
     -fx-font-size:40px;
+}
+#submitAffirmText {
+    -fx-fill: white;
+    -fx-font-family:'x12y16pxMaruMonica';
+    -fx-font-size:20px;
+
 }
 #homeButton:hover {  /* when hovered */
     -fx-text-fill:#B68D40;

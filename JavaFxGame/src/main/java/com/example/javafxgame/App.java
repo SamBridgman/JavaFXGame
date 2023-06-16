@@ -352,7 +352,7 @@ public class App extends Application {
         dexSelectHBox.getChildren().addAll(increaseDex,decreaseDex);
 
         //submit button
-        Button submitAttributes = new Button();
+        Button submitAttributes = new Button("Submit");
         submitAttributes.setOnAction(e -> {
             submitAffirm(player);
         });
@@ -394,21 +394,43 @@ public class App extends Application {
         stage.setTitle("Confirm");
         stage.setScene(new Scene(grid,300, 200));
         grid.setPadding(new Insets(0,0,0,10));
-
+        grid.setStyle("-fx-background-color: black;");
+        grid.getStylesheets().add(getClass().getResource("styles.css").toExternalForm());
         Text name = new Text("Name: " + player.getName());
+        name.setId("submitAffirmText");
         grid.add(name,0,1);
         Text health = new Text("Health: " + player.getHealth());
+        health.setId("submitAffirmText");
         grid.add(health,0,2);
         Text def = new Text("Name: " + player.getDefense());
+        def.setId("submitAffirmText");
         grid.add(def,0,3);
         Text attack = new Text("Attack: " + player.getAttack());
+        attack.setId("submitAffirmText");
         grid.add(attack,0,4);
         Text mana = new Text("Mana: " + player.getMana());
+        mana.setId("submitAffirmText");
         grid.add(mana,0,5);
         Text stamina = new Text("Stamina: " + player.getStamina());
+        stamina.setId("submitAffirmText");
         grid.add(stamina,0,6);
         Text dex = new Text("Dex: " + player.getDex());
+        dex.setId("submitAffirmText");
         grid.add(dex,0,7);
+
+        HBox confirmHBox = new HBox();
+        Button confirmYes = new Button("Yes");
+        confirmYes.setOnAction(e -> {
+            Game game = new Game(player);
+            mainStage.setScene(game.getRootScene());
+        });
+        confirmHBox.getChildren().add(confirmYes);
+        Button confirmNo  = new Button("not yet");
+        confirmNo.setOnAction(e -> {
+            stage.close();
+        });
+        confirmHBox.getChildren().add(confirmNo);
+        grid.add(confirmHBox,0,8);
         stage.show();
     }
     public Scene testWindow() {
