@@ -1,8 +1,11 @@
 package com.example.javafxgame;
 
+import javafx.application.Platform;
+
 public class Entity {
     /*-----Sam------*/
-    protected double health;
+    protected int health;
+    protected int curHealth;
     protected int attack;
     protected int defense;
     protected int mana;
@@ -20,7 +23,7 @@ public class Entity {
         //all these are defaults
         //user will be able to add attributes in character creation
         this.attack = 2;
-        this.health = 1.0;
+        this.health = 10;
         this.defense = 2;
         this.mana = 2;
         this.dex = 2;
@@ -38,9 +41,10 @@ public class Entity {
     public void setAttack(int attack) {
         this.attack = attack;
     }
-    public void setHealth(double health) {
+    public void setHealth(int health) {
         this.health = health;
     }
+    public void setCurHealth(int health){this.curHealth = health;}
     public void setDefense(int defense) {
         this.defense = defense;
     }
@@ -83,9 +87,10 @@ public class Entity {
     public int getAttack() {
         return this.attack;
     }
-    public double getHealth() {
+    public int getHealth() {
         return this.health;
     }
+    public int getCurHealth(){return this.curHealth;}
     public int getDefense() {
         return this.defense;
     }
@@ -111,12 +116,16 @@ public class Entity {
         return this.xp;
     }
 
-
     public void levelUp() { //--sam
         level += 1;
         attributePoints = getAttributePoints() + 10;
         Game.levelUpScreen();//displays level up popup
     }
+    public void update() {
+        Platform.runLater(() -> {
+            this.setHealth(this.getHealth() - 1);
 
+        });
+    }
 
 }

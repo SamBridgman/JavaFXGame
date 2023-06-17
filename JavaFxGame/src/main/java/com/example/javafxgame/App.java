@@ -180,16 +180,16 @@ public class App extends Application {
         increaseHealth.setId("increaseButton");
         increaseHealth.setPrefWidth(50);
         increaseHealth.setOnAction(e -> {
-            if(player.getAttributePoints() > 0) {
+            if(player.getAttributePoints() > 1) {
                 player.setAttributePoints(player.getAttributePoints() - 1);
-                player.setHealth(player.getHealth() + .1);
+                player.setHealth(player.getHealth() + 1);
             }
         });
         Button decreaseHealth = new Button("-");
         decreaseHealth.setOnAction(e -> {
             if((player.getHealth() * 10) > 2) {
                 player.setAttributePoints(player.getAttributePoints() + 1);
-                player.setHealth(player.getHealth() - .1);
+                player.setHealth(player.getHealth() - 1);
             }
         });
         decreaseHealth.setPrefWidth(50);
@@ -365,7 +365,7 @@ public class App extends Application {
         executorService.scheduleAtFixedRate(() -> {
 
             javafx.application.Platform.runLater(() -> attributePoints.setText("Attribute Points: " + Integer.toString(player.getAttributePoints())));
-            javafx.application.Platform.runLater(() -> ccHealthLabel.setText("Health: " + Integer.toString( (int)(player.getHealth() * 10))));
+            javafx.application.Platform.runLater(() -> ccHealthLabel.setText("Health: " + Integer.toString( (int)(player.getHealth()))));
             javafx.application.Platform.runLater(() -> ccAttackLabel.setText("Attack: " + Integer.toString( (int)player.getAttack())));
             javafx.application.Platform.runLater(() -> ccDefenseLabel.setText("Defense: " + Integer.toString( (int)player.getDefense())));
             javafx.application.Platform.runLater(() -> ccManaLabel.setText("Mana: " + Integer.toString( (int)player.getMana())));
@@ -421,8 +421,9 @@ public class App extends Application {
         HBox confirmHBox = new HBox();
         Button confirmYes = new Button("Yes");
         confirmYes.setOnAction(e -> {
+            stage.close();
+            mainStage.close();
             Game game = new Game(player);
-            mainStage.setScene(game.getRootScene());
         });
         confirmHBox.getChildren().add(confirmYes);
         Button confirmNo  = new Button("not yet");

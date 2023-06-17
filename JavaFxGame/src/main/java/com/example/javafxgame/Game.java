@@ -33,21 +33,88 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-public class Game extends App{
+import javafx.stage.WindowEvent;
+
+public class Game extends App implements Runnable {
     private static Scene rootScene;
     private static ProgressBar healthBar;
     private static String difficulty = "normal";
     private static Entity player;
-    //THIS ALL BELOW IS A BUNCH OF TESTING ON HOW TO RETRIEVE AND SEND DATA FROM GUI TO OUR CLASSES
+    private static mainView mainView;
+    private Thread thread;
+    private boolean running = false;
     public Game(Entity player) { //-sam
         this.player = player;
-        runGame();
-        rootScene.getStylesheets().add(getClass().getResource("gameStyles.css").toExternalForm());
+        Stage stage = new Stage();
+        mainView = new mainView(this.player);
+        Scene scene = new Scene(mainView,820,640);
+        stage.setScene(scene);
+        stage.show();
+        mainView.draw();
+        startGame();
+        System.out.println("Game is running: " + running);
+        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+
+            @Override
+            public void handle(WindowEvent event) {
+                running = false;
+                System.exit(1);
+                //stopGame();
+            }
+        });
+        //rootScene.getStylesheets().add(getClass().getResource("gameStyles.css").toExternalForm());
     }
-    public void runGame() { //-sam
 
 
+    public void run() { //-sam
 
+        long lastTime = System.nanoTime();
+        final double amountOfTicks = 60.0;
+        double ns = 1000000000 / amountOfTicks;
+        double delta = 0;
+        int updates = 0;
+        int frames = 0;
+        long timer = System.currentTimeMillis();
+
+        // boolean condition keeping the game running
+        while (running) {
+
+
+            long now = System.nanoTime();
+            delta += (now - lastTime) / ns;
+            lastTime = now;
+            if(delta >= 1) {
+                //methods that needs to be updated are put here
+                //testScreen();
+                if(player.getHealth() > 1 ) {
+                    mainView.update();
+                    player.update();
+                }
+                else {
+                    player.setHealth(10);
+                }
+
+
+                updates++;
+                delta--;
+            }
+            //FPS counter
+            frames++;
+            if(System.currentTimeMillis() - timer > 1000) {
+                timer += 1000;
+                System.out.println(updates + "Ticks, Fps" + frames);
+                updates = 0;
+                frames = 0;
+            }
+        }
+
+    }
+    public synchronized void startGame() {
+        if(running)
+            return;
+        running = true;
+        thread = new Thread(this);
+        thread.start();
     }
     public Scene getRootScene() { //sam
         return rootScene;
