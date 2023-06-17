@@ -122,10 +122,14 @@ public class Entity {
         Game.levelUpScreen();//displays level up popup
     }
     public void update() {
-        Platform.runLater(() -> {
-            this.setHealth(this.getHealth() - 1);
-
-        });
+            this.setHealth(this.getHealth());
+            this.setDefense(this.getDefense());
+            this.setLevel(this.getLevel());
+            this.setAttributePoints(this.getAttributePoints());
+            this.setAttack(this.getAttack());
+            this.setStamina(this.getStamina());
+            this.setMoney(this.getMoney());
+            this.setMana(this.getMana());
     }
 
 }

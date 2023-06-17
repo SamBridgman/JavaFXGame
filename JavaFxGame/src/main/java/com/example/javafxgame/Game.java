@@ -46,6 +46,7 @@ public class Game extends App implements Runnable {
     public Game(Entity player) { //-sam
         this.player = player;
         Stage stage = new Stage();
+        stage.setTitle("Temp Name");
         mainView = new mainView(this.player);
         Scene scene = new Scene(mainView,820,640);
         stage.setScene(scene);
@@ -85,7 +86,7 @@ public class Game extends App implements Runnable {
             lastTime = now;
             if(delta >= 1) {
                 //methods that needs to be updated are put here
-                //testScreen();
+
                 if(player.getHealth() > 1 ) {
                     mainView.update();
                     player.update();
