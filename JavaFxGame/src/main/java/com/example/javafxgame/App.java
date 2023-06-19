@@ -527,18 +527,6 @@ public class App extends Application {
             @Override
             public void handle(KeyEvent event) {
                 switch(event.getCode()) {
-                    case W:
-                        controller.moveUp();
-                        break;
-                    case S:
-                        controller.moveDown();
-                        break;
-                    case D:
-                        controller.moveRight();
-                        break;
-                    case A:
-                        controller.moveLeft();
-                        break;
                     case ESCAPE:
                         mainStage.setScene((Scene)sceneStack.poptop());
                 }

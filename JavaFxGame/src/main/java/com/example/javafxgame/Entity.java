@@ -1,10 +1,17 @@
 package com.example.javafxgame;
 
-import javafx.application.Platform;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.io.FileInputStream;
 
 public class Entity {
     /*-----Sam------*/
     protected int health;
+    protected int x = 0;
+    protected int y = 0;
+
+    private ImageView character;
     protected int curHealth;
     protected int attack;
     protected int defense;
@@ -22,6 +29,18 @@ public class Entity {
     public Entity(String name) {
         //all these are defaults
         //user will be able to add attributes in character creation
+
+        character = new ImageView();
+        try {
+            Image characterImg = new Image(new FileInputStream("JavaFxGame/src/main/resources/com/example/javafxgame/char_walk_right.gif"));
+            character.setImage(characterImg);
+            character.setFitHeight(100);
+            character.setFitWidth(100);
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+
         this.attack = 2;
         this.health = 10;
         this.defense = 2;
@@ -38,6 +57,8 @@ public class Entity {
     public void setName(String name) {
         this.name = name;
     }
+    public void setX(int x){this.x = x;}
+    public void setY(int y){this.y = y;}
     public void setAttack(int attack) {
         this.attack = attack;
     }
@@ -81,6 +102,12 @@ public class Entity {
         this.attributePoints = num;
     }
     //getters --Sam
+    public int getX() {
+        return this.x;
+    }
+    public int getY() {
+        return this.y;
+    }
     public String getName() {
         return this.name;
     }
@@ -121,6 +148,19 @@ public class Entity {
         attributePoints = getAttributePoints() + 10;
         Game.levelUpScreen();//displays level up popup
     }
+    public ImageView getImage() {
+        return this.character;
+    }
+    public void setImage(String file) {
+        try {
+            Image characterImg = new Image(new FileInputStream(file));
+            this.character.setImage(characterImg);
+        }
+        catch(Exception e) {
+            System.out.println(e);
+        }
+
+    }
     public void update() {
             this.setHealth(this.getHealth());
             this.setDefense(this.getDefense());
@@ -130,6 +170,8 @@ public class Entity {
             this.setStamina(this.getStamina());
             this.setMoney(this.getMoney());
             this.setMana(this.getMana());
+            this.setX(this.getX());
+            this.setY(this.getY());
     }
 
 }

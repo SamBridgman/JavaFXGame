@@ -42,6 +42,19 @@
     -fx-scale-x:1.1;
     -fx-scale-y:1.1;
 }
-
+#inventoryStack {
+    -fx-background-image:url("book1.png");
+    -fx-background-repeat:no-repeat;
+    -fx-background-size: cover;
+}
+#inventoryTitle {
+    -fx-text-fill:white;
+    -fx-font-family:'x12y16pxMaruMonica',"Lao MN";
+    -fx-font-size:60;
+}
+#profileBanner {
+    -fx-background-repeat:no-repeat;
+    -fx-background-size: cover;
+}
 
 

@@ -1,5 +1,8 @@
 package com.example.javafxgame;
 
+import java.io.File;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.Executors;
@@ -16,6 +19,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
@@ -37,6 +42,7 @@ import javafx.stage.WindowEvent;
 
 public class Game extends App implements Runnable {
     private static Scene rootScene;
+    private static Stage rootStage;
     private static ProgressBar healthBar;
     private static String difficulty = "normal";
     private static Entity player;
@@ -45,16 +51,30 @@ public class Game extends App implements Runnable {
     private boolean running = false;
     public Game(Entity player) { //-sam
         this.player = player;
-        Stage stage = new Stage();
-        stage.setTitle("Temp Name");
+        rootStage = new Stage();
+        rootStage.setTitle("Temp Name");
         mainView = new mainView(this.player);
-        Scene scene = new Scene(mainView,820,640);
-        stage.setScene(scene);
-        stage.show();
-        mainView.draw();
+        rootScene = new Scene(mainView,820,640);
+        rootStage.setScene(rootScene);
+        rootStage.show();
+        //mainView.draw();
+
+        rootScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch(event.getCode()) {
+                    case ESCAPE:
+                        sceneStack.push(rootScene);
+                        rootStage.setScene(openInventory());
+                }
+            }
+        });
+
+
+
         startGame();
         System.out.println("Game is running: " + running);
-        stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+        rootStage.setOnCloseRequest(new EventHandler<WindowEvent>() {
 
             @Override
             public void handle(WindowEvent event) {
@@ -65,7 +85,48 @@ public class Game extends App implements Runnable {
         });
         //rootScene.getStylesheets().add(getClass().getResource("gameStyles.css").toExternalForm());
     }
+    public Scene openInventory() {
+        StackPane stackPane = new StackPane();
+        stackPane.setId("inventoryStack");
+        try {
 
+            Image pannelImage = new Image(new FileInputStream("JavaFxGame/src/main/resources/com/example/javafxgame/ProfleBanner.png"));
+            ImageView pannel = new ImageView(pannelImage);
+            pannel.setId("profileBanner");
+            pannel.setTranslateX(-200);
+            pannel.setTranslateY(-125);
+
+
+            stackPane.getChildren().add(pannel);
+        }
+
+        catch(Exception e) {
+
+        }
+        Scene scene = new Scene(stackPane,820,640);
+        Image[] flipAnimation ={};
+        Label title = new Label("Inventory");
+        title.setTranslateY(-250);
+        title.setId("inventoryTitle");
+        stackPane.getChildren().add(title);
+
+
+
+        scene.getStylesheets().add(getClass().getResource("gameStyles.css").toExternalForm());
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch(event.getCode()) {
+                    case ESCAPE:
+                        rootStage.setScene((Scene)sceneStack.poptop());
+
+                }
+            }
+        });
+        return scene;
+
+
+    }
 
     public void run() { //-sam
 
@@ -92,7 +153,7 @@ public class Game extends App implements Runnable {
                     player.update();
                 }
                 else {
-                    player.setHealth(10);
+                    //player.setHealth(10);
                 }
 
 
