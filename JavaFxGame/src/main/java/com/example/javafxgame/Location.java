@@ -1,5 +1,9 @@
 package com.example.javafxgame;
 
+import javafx.scene.canvas.Canvas;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+
 public class Location {
     private String name;
     private Entity[] enemies;

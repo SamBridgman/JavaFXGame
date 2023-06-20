@@ -57,4 +57,9 @@
     -fx-background-size: cover;
 }
 
+#inventoryTitle {
+    -fx-text-fill:white;
+    -fx-font-family:'x12y16pxMaruMonica',"Lao MN";
+    -fx-font-size:30;
+}
 

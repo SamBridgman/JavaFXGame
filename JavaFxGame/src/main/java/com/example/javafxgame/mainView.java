@@ -26,7 +26,7 @@ import java.io.FileNotFoundException;
 
 public class mainView extends VBox {
     private ImageView character;
-    private Canvas canvas;
+    protected Canvas canvas;
     private Entity player;
     private Label money;
     private Button addMoney;
@@ -35,10 +35,11 @@ public class mainView extends VBox {
     public mainView(Entity player) {
         this.healthBar = new ProgressBar(Double.valueOf(player.getHealth()) / 10);
         this.player = player;
-        this.canvas = new Canvas(820,580);
+        this.canvas = new Canvas();
         StackPane stackPane = new StackPane();
-        stackPane.setStyle("-fx-background-color: black;");
         stackPane.prefHeightProperty().bind(this.heightProperty());
+
+
 
         money = new Label(Integer.toString(player.getMoney()));
         healthBar.setId("healthBar");
@@ -48,14 +49,26 @@ public class mainView extends VBox {
             System.out.println("moneyyy");
         });
 
-
         this.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
                 switch(event.getCode()) {
                     case W:
-                        movementController.moveUp(player);
-                        player.getImage().setTranslateY(player.getY());
+                        System.out.println("Player: " + player.getY());
+                        System.out.println("view: " + stackPane.getHeight());
+                        if(player.getY() < ((stackPane.getHeight() / 2) - (stackPane.getHeight())) + 30) {
+                            System.out.println("Out of bounds");
+                            Location location = new Location();
+                            System.out.println("setting location");
+                            draw("UP");
+                            Game.curLocation = "Up";
+                            Game.changeLocation = true;
+                        }
+                        else {
+                            movementController.moveUp(player);
+                            player.getImage().setTranslateY(player.getY());
+                        }
+
                         break;
                     case D:
                         movementController.moveRight(player);
@@ -66,23 +79,40 @@ public class mainView extends VBox {
                         player.getImage().setTranslateX(player.getX());
                         break;
                     case S:
-                        movementController.moveDown(player);
-                        player.getImage().setTranslateY(player.getY());
+                        System.out.println("Player: " + player.getY());
+                        System.out.println("view: " + stackPane.getHeight());
+                        if(player.getY() > ((stackPane.getHeight())  / 2) - 60) {
+
+                            System.out.println("Out of bounds");
+                        }
+                        else {
+                            movementController.moveDown(player);
+                            player.getImage().setTranslateY(player.getY());
+                        }
+
+
                         break;
 
                 }
             }
         });
 
-        stackPane.getChildren().addAll(player.getImage(),money,addMoney,healthBar);
+        stackPane.getChildren().addAll(this.canvas,player.getImage(),money,addMoney,healthBar);
         this.getChildren().addAll(stackPane);
         this.getStylesheets().add(getClass().getResource("gameStyles.css").toExternalForm());
     }
 
-    public void draw() {
-        GraphicsContext g = this.canvas.getGraphicsContext2D();
-        g.setFill(Color.ALICEBLUE);
-        g.fillRect(0,0,820,640);
+    public void draw(String location) {
+        if(location.equals("Start")) {
+            GraphicsContext g = this.canvas.getGraphicsContext2D();
+            g.setFill(Color.GREEN);
+            g.fillRect(0,0,100,100);
+        }
+        else if(location.equals("Up")) {
+            GraphicsContext g = this.canvas.getGraphicsContext2D();
+            g.setFill(Color.BLACK);
+            g.fillRect(0,0,100,100);
+        }
     }
     public void update() {
         Platform.runLater(() -> { //for whatever reason, thread crashes if platform run later not here

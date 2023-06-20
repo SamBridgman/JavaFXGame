@@ -43,6 +43,8 @@ import javafx.stage.WindowEvent;
 public class Game extends App implements Runnable {
     private static Scene rootScene;
     private static Stage rootStage;
+    public static boolean changeLocation = true;
+    public static String curLocation;
     private static ProgressBar healthBar;
     private static String difficulty = "normal";
     private static Entity player;
@@ -57,7 +59,6 @@ public class Game extends App implements Runnable {
         rootScene = new Scene(mainView,820,640);
         rootStage.setScene(rootScene);
         rootStage.show();
-        //mainView.draw();
 
         rootScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
@@ -95,20 +96,32 @@ public class Game extends App implements Runnable {
             pannel.setId("profileBanner");
             pannel.setTranslateX(-200);
             pannel.setTranslateY(-125);
+            Image nameHandleImage = new Image(new FileInputStream("JavaFxGame/src/main/resources/com/example/javafxgame/1.png"));
+            ImageView nameHandle = new ImageView(nameHandleImage);
+            nameHandle.setId("profileNameHandle");
+            nameHandle.setTranslateX(-150);
+            nameHandle.setTranslateY(0);
 
 
             stackPane.getChildren().add(pannel);
+            stackPane.getChildren().add(nameHandle);
         }
 
         catch(Exception e) {
 
         }
+
         Scene scene = new Scene(stackPane,820,640);
         Image[] flipAnimation ={};
         Label title = new Label("Inventory");
         title.setTranslateY(-250);
         title.setId("inventoryTitle");
         stackPane.getChildren().add(title);
+
+        Label nameTitle = new Label(player.getName());
+        nameTitle.setTranslateY(0);
+        nameTitle.setId("inventoryNameTitle");
+        stackPane.getChildren().add(nameTitle);
 
 
 
@@ -150,6 +163,12 @@ public class Game extends App implements Runnable {
 
                 if(player.getHealth() > 1 ) {
                     mainView.update();
+                    if(changeLocation) {
+                        mainView.draw(curLocation);
+                        changeLocation = false;
+                    }
+                    mainView.canvas.setWidth(mainView.getWidth());
+                    mainView.canvas.setHeight(mainView.getHeight());
                     player.update();
                 }
                 else {
