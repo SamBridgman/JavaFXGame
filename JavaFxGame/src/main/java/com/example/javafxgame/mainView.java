@@ -26,7 +26,7 @@ import java.io.FileNotFoundException;
 
 public class mainView extends VBox {
     private ImageView character;
-    protected Canvas canvas;
+    public static Canvas canvas;
     private Entity player;
     private Label money;
     private Button addMoney;
@@ -38,8 +38,10 @@ public class mainView extends VBox {
         this.canvas = new Canvas();
         StackPane stackPane = new StackPane();
         stackPane.prefHeightProperty().bind(this.heightProperty());
+        stackPane.prefWidthProperty().bind(this.widthProperty());
 
-
+        canvas.heightProperty().bind(stackPane.heightProperty());
+        canvas.widthProperty().bind(stackPane.widthProperty());
 
         money = new Label(Integer.toString(player.getMoney()));
         healthBar.setId("healthBar");
@@ -54,15 +56,17 @@ public class mainView extends VBox {
             public void handle(KeyEvent event) {
                 switch(event.getCode()) {
                     case W:
-                        System.out.println("Player: " + player.getY());
-                        System.out.println("view: " + stackPane.getHeight());
                         if(player.getY() < ((stackPane.getHeight() / 2) - (stackPane.getHeight())) + 30) {
                             System.out.println("Out of bounds");
                             Location location = new Location();
                             System.out.println("setting location");
-                            draw("UP");
+                            player.setY(270);
                             Game.curLocation = "Up";
                             Game.changeLocation = true;
+                            draw("UP");
+                            player.getImage().setTranslateY(player.getY());
+
+
                         }
                         else {
                             movementController.moveUp(player);
@@ -71,16 +75,44 @@ public class mainView extends VBox {
 
                         break;
                     case D:
-                        movementController.moveRight(player);
-                        player.getImage().setTranslateX(player.getX());
+                        if(player.getX() > ((stackPane.getWidth() / 2) - 30)) {
+                            System.out.println("Out of bounds");
+                            //Location location = new Location();
+                            System.out.println("setting location");
+                            //player.setY(270);
+                            //Game.curLocation = "Up";
+                            //Game.changeLocation = true;
+                            //draw("UP");
+
+
+
+                        }
+                        else {
+                            movementController.moveRight(player);
+                            player.getImage().setTranslateX(player.getX());
+                        }
+
                         break;
                     case A:
-                        movementController.moveLeft(player);
-                        player.getImage().setTranslateX(player.getX());
+                        if(player.getX() < ((stackPane.getWidth() / 2) - (stackPane.getWidth())) + 30) {
+                            System.out.println("Out of bounds");
+                            //Location location = new Location();
+                            System.out.println("setting location");
+                            //player.setY(270);
+                            //Game.curLocation = "Up";
+                            //Game.changeLocation = true;
+                            //draw("UP");
+
+
+
+                        }
+                        else {
+                            movementController.moveLeft(player);
+                            player.getImage().setTranslateX(player.getX());
+                        }
+
                         break;
                     case S:
-                        System.out.println("Player: " + player.getY());
-                        System.out.println("view: " + stackPane.getHeight());
                         if(player.getY() > ((stackPane.getHeight())  / 2) - 60) {
 
                             System.out.println("Out of bounds");
@@ -103,22 +135,21 @@ public class mainView extends VBox {
     }
 
     public void draw(String location) {
-        if(location.equals("Start")) {
-            GraphicsContext g = this.canvas.getGraphicsContext2D();
-            g.setFill(Color.GREEN);
-            g.fillRect(0,0,100,100);
-        }
-        else if(location.equals("Up")) {
-            GraphicsContext g = this.canvas.getGraphicsContext2D();
-            g.setFill(Color.BLACK);
-            g.fillRect(0,0,100,100);
+        GraphicsContext g = canvas.getGraphicsContext2D();
+        int col = 0;
+        int row=0;
+        int x = 0;
+        int y =0;
+
+        while (col < this.getMaxHeight() && row < this.getMaxWidth()) {
+            g.drawImage();
         }
     }
     public void update() {
         Platform.runLater(() -> { //for whatever reason, thread crashes if platform run later not here
             healthBar.setProgress(Double.valueOf(player.getHealth()) / 10);
             money.setText(Integer.toString(player.getMoney()));
-
+            player.update();
         });
 
     }

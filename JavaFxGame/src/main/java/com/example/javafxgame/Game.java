@@ -44,7 +44,7 @@ public class Game extends App implements Runnable {
     private static Scene rootScene;
     private static Stage rootStage;
     public static boolean changeLocation = true;
-    public static String curLocation;
+    public static String curLocation = "Start";
     private static ProgressBar healthBar;
     private static String difficulty = "normal";
     private static Entity player;
@@ -58,8 +58,8 @@ public class Game extends App implements Runnable {
         mainView = new mainView(this.player);
         rootScene = new Scene(mainView,820,640);
         rootStage.setScene(rootScene);
-        rootStage.show();
 
+        rootStage.show();
         rootScene.setOnKeyPressed(new EventHandler<KeyEvent>() {
             @Override
             public void handle(KeyEvent event) {
@@ -160,16 +160,14 @@ public class Game extends App implements Runnable {
             lastTime = now;
             if(delta >= 1) {
                 //methods that needs to be updated are put here
-
+                System.out.println("X: " + player.getX() + "  Y: " + player.getY());
                 if(player.getHealth() > 1 ) {
-                    mainView.update();
                     if(changeLocation) {
                         mainView.draw(curLocation);
                         changeLocation = false;
                     }
-                    mainView.canvas.setWidth(mainView.getWidth());
-                    mainView.canvas.setHeight(mainView.getHeight());
-                    player.update();
+                    mainView.update();
+
                 }
                 else {
                     //player.setHealth(10);
